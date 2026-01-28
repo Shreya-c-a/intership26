@@ -25,3 +25,9 @@ def recipe(request):
         ingredient = ["maggie","tomatpo"]
         data = {"name":"maggie","time":20,"ingredient":ingredient}
         return render(request, 'recipe.html',data)   
+def team(request):
+        team=["india","australia","england"]
+        playerlist=["virat","smith","shreyas","gill"]
+        trophy=["world cup","t20","odi"]
+        data={"team":team,"playerlist":playerlist,"trophy":trophy,"capname":"rohit"}
+        return render(request, 'team.html',data)

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>team  </title>
+    </head>
+    <body>
+        <h1> This is team page </h1>
+        <h1>team name: {{ team }} </h1>
+            <h2> player name : {{ playername }}  </h2>
+            <h3> trophy won: {{ trophy }} </h3>
+            {% for t in team %}
+                <h2>{{ t }}</h2>
+            {% endfor %}
+            {% for p in playername %}
+                <h2>{{ p }}</h2>
+            {% endfor %}
+            {% for tr in trophy %}
+                <h2>{{ tr }}</h2>
+            {% endfor %}
+    </body>
+    </html>
