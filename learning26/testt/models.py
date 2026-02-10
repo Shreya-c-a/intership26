@@ -137,6 +137,13 @@ class Notification(models.Model):
         return f"Notification to {self.user.full_name}"
 #analytics model
 class Analytics(models.Model):
+    admin_id = models.ForeignKey(
+        Admin,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+
     parking_lot = models.ForeignKey(ParkingLot, on_delete=models.CASCADE)
     peak_hours = models.CharField(max_length=50)
     total_revenue = models.DecimalField(max_digits=12, decimal_places=2)
