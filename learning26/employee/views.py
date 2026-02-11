@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponse
 from .models import Employee
+from .forms import EmployeeForm,courseForm,libraryForm,eventForm     
 
 # Create your views here.
 def employeeList(request):
@@ -23,7 +24,7 @@ def employeeFilter(request):
     #employee4 = Employee.objects.filter(age>23).values()
     employee4 = Employee.objects.filter(age__gt=23).values()
     employee5 = Employee.objects.filter(age__gte=23).values()
-
+    
     #lt , lte
 
     #string queries
@@ -50,8 +51,8 @@ def employeeFilter(request):
     employee17 = Employee.objects.order_by("-age").values()    #desc
 
     employee18 = Employee.objects.order_by("-salary").values()    #desc
-
-    
+    employee19 = Employee.objects.order_by("salary").values()     #asc
+    employee20 = Employee.objects.filter(salary__lte=2100).values()     #asc
 
     #and
     print("query 1",employee)
@@ -71,4 +72,52 @@ def employeeFilter(request):
     print("query 15",employee15) 
     print("query 16",employee16) 
     print("query 17",employee17) 
+    print("query 18",employee18) 
+    print("query 19",employee19)
+    print("query 20",employee20)
     return render(request, 'employee/employeefilter.html')
+
+def createEmployee(request): 
+    Employee.objects.create(name="ajay",age=23,salary=23000,post="HR",join_date="2022-01-01")
+    return HttpResponse("EMPLOYEE CREATED...")
+
+def createEmployeeWithForm(request):
+    print(request.method)
+    if request.method == "POST":
+        form = EmployeeForm(request.POST)
+        form.save() #it same as create
+        return HttpResponse("EMPLOYEE CREATED...")
+    else:
+        #form object create --> html
+        form = EmployeeForm() #form object        
+        return render(request,"employee/createEmployeeForm.html",{"form":form})
+def createcours(request):
+    print(request.method)
+    if request.method == "POST":
+        form = courseForm(request.POST)
+        form.save() #it same as create
+        return HttpResponse("COURSE CREATED...")
+    else:
+        #form object create --> html
+        form = courseForm() #form object        
+        return render(request,"employee/createCourseForm.html",{"form":form})
+def createlibrary(request):
+    print(request.method)
+    if request.method == "POST":
+        form = libraryForm(request.POST)
+        form.save() #it same as create
+        return HttpResponse("BOOK CREATED...")
+    else:
+        #form object create --> html
+        form = libraryForm() #form object        
+        return render(request,"employee/createLibraryForm.html",{"form":form})
+def createevent(request):
+    print(request.method)
+    if request.method == "POST":
+        form = eventForm(request.POST)
+        form.save() #it same as create
+        return HttpResponse("EVENT CREATED...")
+    else:
+        #form object create --> html
+        form = eventForm() #form object        
+        return render(request,"employee/createEventForm.html",{"form":form})

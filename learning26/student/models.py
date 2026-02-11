@@ -107,3 +107,4 @@ class subject(models.Model):
             
         def __str__(self):
             return self.subjectName
+        
