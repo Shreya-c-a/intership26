@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,redirect
 from .models import Employee
 from .forms import EmployeeForm,courseForm,libraryForm,eventForm     
 
@@ -80,6 +80,7 @@ def employeeFilter(request):
 def createEmployee(request): 
     Employee.objects.create(name="ajay",age=23,salary=23000,post="HR",join_date="2022-01-01")
     return HttpResponse("EMPLOYEE CREATED...")
+    
 
 def createEmployeeWithForm(request):
     print(request.method)
@@ -121,3 +122,32 @@ def createevent(request):
         #form object create --> html
         form = eventForm() #form object        
         return render(request,"employee/createEventForm.html",{"form":form})
+    
+def deleteEmployee(request,id):
+    #delete from employees where id = 1
+    print("id from url = ",id)
+    Employee.objects.filter(id=id).delete()
+    #return HttpResponse("EMPLOYEE DELETED...")
+    #employee list redirecr
+    return redirect("employeeList") #url --> name -->
+
+
+def filterEmployee(request):
+    print("filter employee called...")
+    employees = Employee.objects.filter(age__gte=25).values()
+    print("filter employees = ",employees)
+    #return redirect("employeeList")
+    return render(request,"employee/employeeList.html",{"employees":employees})
+
+def sortEmployee(request, id):
+
+    if id == 1:
+        employees = Employee.objects.order_by("age")     # ASC
+    elif id == 2:
+        employees = Employee.objects.order_by("-age")    # DESC
+    else:
+        employees = Employee.objects.all()
+    return render(request, "employee/employeeList.html", {"employees": employees})
+
+    
+    
