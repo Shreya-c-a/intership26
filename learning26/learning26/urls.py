@@ -32,4 +32,5 @@ urlpatterns = [
     path('team/', views.team),
     path('student/', include('student.urls')),
     path('employee/',include('employee.urls')),
+    path('services/', include('services.urls')),
 ]
