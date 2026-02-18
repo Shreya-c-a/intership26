@@ -1,6 +1,7 @@
 
 # Create your views here.
-from django.shortcuts import render,redirect
+from urllib import request
+from django.shortcuts import get_object_or_404, render,redirect
 from .models import Service
 from .forms import ServiceForm
 
@@ -10,27 +11,30 @@ def serviceList(request):
     return render(request, 'services/servicelist.html', {"services": services})
 
 def createService(request):
-    if request.method == "POST":
-        form = ServiceForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("servicelist")
-    else:
-        form = ServiceForm()
-    return render(request, 'services/createservice.html', {"form": form})
+    form = ServiceForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('servicelist')
 
-def deleteService(request, id): 
-    Service.objects.filter(id=id).delete() 
-    return redirect("servicelist")     
+    return render(request, 'services/createservice.html', {'form': form})
+
+
+def deleteService(request, id):
+    service = Service.objects.get(id=id)
+
+    if request.method == "POST":
+        service.delete()
+        return redirect('servicelist')
+
+    return render(request, 'services/servicedelete.html', {'service': service})
 
 
 def updateService(request, id):
-    service = Service.objects.get(id=id)
-    if request.method == "POST":
-        form = ServiceForm(request.POST, instance=service)
-        if form.is_valid():
-            form.save()
-            return redirect("servicelist")
-    else:
-        form = ServiceForm(instance=service)
-    return render(request, 'services/updateservice.html', {"form": form})
+    service = get_object_or_404(Service, id=id)
+    form = ServiceForm(request.POST or None, instance=service)
+
+    if form.is_valid():
+        form.save()
+        return redirect('servicelist')
+
+    return render(request, 'services/updateservice.html', {'form': form})

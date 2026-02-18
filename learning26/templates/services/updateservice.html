@@ -1,6 +1,36 @@
-<h1>Update Service</h1>
-<a href="{% url 'servicelist' %}">Back to Service List</a>
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Update Service</button>
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+
+        <div class="card shadow-lg border-0 rounded-4 p-4">
+
+            <div class="text-center mb-4">
+                <h2 class="fw-bold text-warning">✏️ Update Service</h2>
+                <p class="text-muted">Modify service information</p>
+            </div>
+
+            <form method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+
+                <button type="submit" class="btn btn-warning w-100 mt-3">
+                    Update Service
+                </button>
+            </form>
+
+            <div class="text-center mt-3">
+                <a href="{% url 'servicelist' %}" class="btn btn-outline-secondary">
+                    ← Back to Services
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

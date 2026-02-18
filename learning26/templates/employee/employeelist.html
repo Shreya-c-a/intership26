@@ -1,4 +1,6 @@
 <h1>EMPLOYEE LIST</h1>
+{% extends 'base.html' %}
+{% block content %}
 <a href="{% url 'createEmployeeWithForm'%}">CREATE EMPLOYEE</a>
 <a href ="{% url 'filterEmployee' %}">FILTER</a> 
 <a href="{% url 'sortEmployee' 1 %}">SORT asc</a>
@@ -32,3 +34,4 @@
         {% endfor %}
     </tbody>
 </table>
+{% endblock content %}

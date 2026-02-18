@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+
+
 
 # Create your views here.
 def studentdetails(request):
@@ -13,3 +15,6 @@ def studentattendance(request):
 def studentfees(request):
     fees={"name":"john","fees":50000}
     return render(request, 'student/studentfees.html',fees)
+
+
+

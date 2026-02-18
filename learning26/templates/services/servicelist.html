@@ -1,28 +1,66 @@
-<h1>Service List</h1>
-<a href="{% url 'servicecreate' %}">Create Service</a>
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Service Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Created At</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for service in services %}
-        <tr>
-            <td>{{ service.id }}</td>
-            <td>{{ service.service_name }}</td>
-            <td>{{ service.description }}</td>
-            <td>{{ service.price }}</td>
-            <td>{{ service.created_at }}</td>
-            <td>
-                <a href="{% url 'serviceupdate' service.id %}">Update</a>
-                <a href="{% url 'servicedelete' service.id %}">Delete</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between mb-4">
+    <h2 class="text-white">All Services</h2>
+    <a href="{% url 'servicecreate' %}" class="btn btn-light">+ Add Service</a>
+</div>
+
+<div class="row g-4">
+{% for service in services %}
+    <div class="col-md-4">
+        <div class="card glass-card p-3">
+
+            <h5>{{ service.service_name }}</h5>
+            <p>{{ service.description }}</p>
+            <p><strong>₹ {{ service.price }}</strong></p>
+
+            <div class="d-flex justify-content-between mt-3">
+                <a href="{% url 'serviceupdate' service.id %}" class="btn btn-warning btn-sm">Edit</a>
+
+                <button class="btn btn-danger btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteModal{{ service.id }}">
+                    Delete
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal{{ service.id }}" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title">Confirm Delete</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body">
+            Are you sure you want to delete 
+            <strong>{{ service.service_name }}</strong> ?
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Cancel
+            </button>
+
+            <form method="POST" action="{% url 'servicedelete' service.id %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger">
+                Yes, Delete
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+{% endfor %}
+</div>
+
+{% endblock %}
