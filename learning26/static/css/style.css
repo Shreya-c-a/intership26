@@ -34,6 +34,10 @@
 .nav-links {
     display: flex;
     gap: 20px;
+    color: #fff;
+    text-align: center;
+    justify-content: center;
+    
 }
 
 .nav-links a {
@@ -41,6 +45,8 @@
     color: #fff;
     font-size: 20px;
     font-weight: bold;
+    text-align: center;
+    justify-content: center;
 }
 
 .content {
@@ -111,7 +117,7 @@ body {
 }
 /* 2. The Service Card */
 .service-card {
-    background: #fff;
+    background: #d2bbbb;
     border: 1px solid #e0e0e0;
     border-radius: 12px;
     overflow: hidden;
